@@ -24,6 +24,7 @@
     "@strapi/strapi": "5.0.1",
     "better-sqlite3": "9.4.3",
     "patch-package": "^8.0.0",
+    "pg": "^8.13.1",
     "pluralize": "^8.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -35,11 +36,12 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "LAUNCHPAD"
+    "uuid": "LAUNCHPAD-LOCAL-51f61c6f-2fa5-490a-90a0-59f2a1a80dcd"
   },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
