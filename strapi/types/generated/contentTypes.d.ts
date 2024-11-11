@@ -621,6 +621,12 @@ export interface ApiBlogPageBlogPage extends Struct.SingleTypeSchema {
           localized: true;
         };
       }>;
+    header_image: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -912,76 +918,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::product.product'
-    >;
-  };
-}
-
-export interface ApiProductPageProductPage extends Struct.SingleTypeSchema {
-  collectionName: 'product_pages';
-  info: {
-    singularName: 'product-page';
-    pluralName: 'product-pages';
-    displayName: '/products';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    seo: Schema.Attribute.Component<'shared.seo', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    heading: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    sub_heading: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    dynamic_zone: Schema.Attribute.DynamicZone<
-      [
-        'dynamic-zone.testimonials',
-        'dynamic-zone.related-products',
-        'dynamic-zone.related-articles',
-        'dynamic-zone.pricing',
-        'dynamic-zone.launches',
-        'dynamic-zone.how-it-works',
-        'dynamic-zone.hero',
-        'dynamic-zone.form-next-to-section',
-        'dynamic-zone.features',
-        'dynamic-zone.faq',
-        'dynamic-zone.cta',
-        'dynamic-zone.brands',
-      ]
-    > &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-page.product-page'
     >;
   };
 }
@@ -1442,7 +1378,6 @@ declare module '@strapi/strapi' {
       'api::page.page': ApiPagePage;
       'api::plan.plan': ApiPlanPlan;
       'api::product.product': ApiProductProduct;
-      'api::product-page.product-page': ApiProductPageProductPage;
       'api::redirection.redirection': ApiRedirectionRedirection;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'admin::permission': AdminPermission;
