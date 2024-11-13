@@ -1,11 +1,20 @@
-import { IconArrowLeft } from "@tabler/icons-react";
-import { Container } from "./container";
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { Link } from "next-view-transitions";
 import { format } from "date-fns";
-import { strapiImage } from "@/lib/strapi/strapiImage";
-import DynamicZoneManager from "./dynamic-zone/manager";
+
+import {
+  AiOutlineCalendar,
+  AiOutlineUser,
+  FaFacebookF,
+  AiOutlineInstagram,
+  AiOutlineTwitter,
+  AiFillLinkedin,
+  AiOutlineDribbble
+} from "../assets/icons/vander";
+
 import { Article } from "@/types/types";
+import { strapiImage } from "@/lib/strapi/strapiImage";
 
 export async function BlogLayout({
   article,
@@ -16,78 +25,93 @@ export async function BlogLayout({
   locale: string;
   children: React.ReactNode;
 }) {
+  // Log do conteúdo para depurar
+  console.log(article);
+
+  // Checagem para garantir que `article.content` seja uma string válida
+  const content = typeof article.content === "string" ? article.content : JSON.stringify(article.content);
 
   return (
-    <Container className="mt-16 lg:mt-32">
-      <div className="flex justify-between items-center px-2 py-8">
-        <Link href="/blog" className="flex space-x-2 items-center">
-          <IconArrowLeft className="w-4 h-4 text-muted" />
-          <span className="text-sm text-muted">Back</span>
-        </Link>
-      </div>
-      <div className="w-full mx-auto">
-        {article.image ? (
-          <Image
-            src={strapiImage(article.image.url)}
-            height="800"
-            width="800"
-            className="h-40 md:h-96 w-full aspect-square object-cover rounded-3xl [mask-image:radial-gradient(circle,white,transparent)]"
-            alt={article.title}
-          />
-        ) : (
-          <div className="h-40 md:h-96 w-full aspect-squace rounded-3xl shadow-derek bg-neutral-900 flex items-center justify-center">
-            {/* <Logo /> */}
-          </div>
-        )}
-      </div>
-      <div className="xl:relative">
-        <div className="mx-auto max-w-2xl">
-          <article className="pb-8 pt-8">
-            <div className="flex gap-4 flex-wrap ">
-              {article.categories?.map((category, idx) => (
-                <p
-                  key={`category-${idx}`}
-                  className="text-xs font-bold text-muted px-2 py-1 rounded-full bg-neutral-800 capitalize"
-                >
-                  {category.name}
-                </p>
-              ))}
-            </div>
-            <header className="flex flex-col">
-              <h1 className="mt-8 text-4xl font-bold tracking-tight text-neutral-200 sm:text-5xl ">
-                {article.title}
-              </h1>
-            </header>
-            <div className="mt-8 prose prose-sm prose-invert">
-              {children}
-            </div>
-            <div className="flex space-x-2 items-center pt-12 border-t border-neutral-800 mt-12">
-              <div className="flex space-x-2 items-center ">
-                {/* <Image
-                  src={article.authorAvatar}
-                  alt={article.author}
-                  width={20}
-                  height={20}
-                  className="rounded-full h-5 w-5"
-                />
-                <p className="text-sm font-normal text-muted">
-                  {article.author}
-                </p> */}
+    <>
+      <section className="bg-half-170 d-table w-100 pb-0">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-9">
+              <div className="title-heading">
+                <ul className="list-inline">
+                  <li className="list-inline-item">
+                    <AiOutlineUser className="mb-0 me-1 text-dark h5" />
+                    <Link href="#" className="text-primary h6"></Link>
+                  </li>
+                  <li className="list-inline-item text-muted h6 ms-3">
+                    <AiOutlineCalendar className="mb-0 me-1 text-dark h5" />
+                    {format(new Date(article.publishedAt), "MMMM dd, yyyy")}
+                  </li>
+                </ul>
+
+                <h4 className="heading text-decoration-underline mb-4">{article.title}</h4>
               </div>
-              <div className="h-5 rounded-lg w-0.5 bg-neutral-700" />
-              <time
-                dateTime={article.publishedAt}
-                className="flex items-center text-base "
-              >
-                <span className="text-muted text-sm">
-                  {format(new Date(article.publishedAt), "MMMM dd, yyyy")}
-                </span>
-              </time>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-      {article?.dynamic_zone && (<DynamicZoneManager dynamicZone={article?.dynamic_zone} locale={locale} />)}
-    </Container>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12">
+              <div className="card rounded overflow-hidden">
+                <Image
+                  src={article.image ? strapiImage(article.image.url) : "/placeholder.jpg"}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                  className="img-fluid rounded shadow"
+                  alt={article.title}
+                />
+
+                <div className="position-absolute bottom-0 start-0 mb-3 ms-4">
+                  {article.categories?.map((category, idx) => {
+                    // Verificação para garantir que `category.name` seja uma string
+                    return (
+                      <Link href="#" className="badge text-bg-primary me-1" key={idx}>
+                        {category.name || "Categoria desconhecida"}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mt-100 mt-60">
+          <div className="row justify-content-center">
+            <div className="col-lg-9">
+              <div className="row">
+                <div className="col-md-1 d-md-block d-none">
+                  <div className="sidebar sticky-bar">
+                    <ul className="list-unstyled align-items-center social-icon social mb-0">
+                      <li><Link href="#" className="rounded"><FaFacebookF /></Link></li>
+                      <li><Link href="#" className="rounded mt-1"><AiOutlineInstagram /></Link></li>
+                      <li><Link href="#" className="rounded mt-1"><AiOutlineTwitter /></Link></li>
+                      <li><Link href="#" className="rounded mt-1"><AiFillLinkedin /></Link></li>
+                      <li><Link href="#" className="rounded mt-1"><AiOutlineDribbble /></Link></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="col-md-11">
+                  <div className="text-muted">
+                    {children}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

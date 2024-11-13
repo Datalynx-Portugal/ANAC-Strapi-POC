@@ -69,16 +69,16 @@ export default function RootLayout({
   params
 }: {
   children: React.ReactNode
-  params: { lang: Locale }
+  params: { lang: Locale; navDark: boolean }
 }) {
   return (
     <html lang={params.lang}>
       <body className={`${poppins.variable} ${ubuntu.variable} ${teko.variable} ${noto.variable} ${libre.variable} ${kaushan.variable}`}>
-      <NavbarTwo navClass="defaultscroll sticky" manuClass="navigation-menu nav-light nav-right" navDark={undefined}/>
+      <NavbarTwo navClass="defaultscroll sticky" manuClass="navigation-menu nav-light nav-right" navDark={true}/>
         {children}
         <FooterSix/>
         <ScrollTop/>
-      </body>
+      </body> 
     </html>
   );
 }

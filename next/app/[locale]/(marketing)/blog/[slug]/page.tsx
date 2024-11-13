@@ -5,6 +5,7 @@ import fetchContentType from "@/lib/strapi/fetchContentType";
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 import { generateMetadataObject } from '@/lib/shared/metadata';
+import { cp } from 'fs';
 
 export async function generateMetadata({
   params,
